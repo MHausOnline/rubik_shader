@@ -81,14 +81,14 @@ vec3 oneHot(vec3 vector){
 }
 
 
-vec4 toColor(vec3 normal){
+vec3 toColor(vec3 normal){
     vec3 maxVec = oneHot(normal);
-    if(maxVec.x > .5 && abs(maxVec.y) < .5 && abs(maxVec.z) < .5) return vec4(0., 0., 1. , 1.);
-    if(maxVec.x < -.5 && abs(maxVec.y) < .5 && abs(maxVec.z) < .5) return vec4(1., 0., 0., 1.);
-    if(maxVec.y > .5 && abs(maxVec.z) < .5 && abs(maxVec.x) < .5) return vec4(0., 1., 0., 1.);
-    if(maxVec.y < -.5 && abs(maxVec.z) < .5 && abs(maxVec.x) < .5) return vec4(1., 1., 1., 1.);
-    if(maxVec.z > .5 && abs(maxVec.y) < .5 && abs(maxVec.x) < .5) return vec4(1., 1., 0., 1.);
-    if(maxVec.z < -.5 && abs(maxVec.y) < .5 && abs(maxVec.x) < .5) return vec4(1., .5, 0., 1.);
+    if(maxVec.x > .5 && abs(maxVec.y) < .5 && abs(maxVec.z) < .5) return vec3(0., 0., 1.);
+    if(maxVec.x < -.5 && abs(maxVec.y) < .5 && abs(maxVec.z) < .5) return vec3(1., 0., 0.);
+    if(maxVec.y > .5 && abs(maxVec.z) < .5 && abs(maxVec.x) < .5) return vec3(0., 1., 0.);
+    if(maxVec.y < -.5 && abs(maxVec.z) < .5 && abs(maxVec.x) < .5) return vec3(1., 1., 1.);
+    if(maxVec.z > .5 && abs(maxVec.y) < .5 && abs(maxVec.x) < .5) return vec3(1., 1., 0.);
+    if(maxVec.z < -.5 && abs(maxVec.y) < .5 && abs(maxVec.x) < .5) return vec3(1., .5, 0.);
 }
 
 void cubeIntersect(Cube cube, vec3 base, vec3 direct){
@@ -110,7 +110,7 @@ void cubeIntersect(Cube cube, vec3 base, vec3 direct){
         vec3 intersect = offset + direct * indices[i];
         if(indices[i] > 0. && abs(intersect.z) <= cube.size.z*1.01 && abs(intersect.y) <= cube.size.y*1.01 && abs(intersect.x) <= cube.size.x*1.01){
             vec3 normal = normalize(oneHot(intersect));
-            vec4 color = max(0.,(dot(normal, normalize(intersect-rLight)))) * toColor(intersect)/2.;
+            vec4 color = vec4(max(0.,(dot(normal, normalize(intersect-rLight)))) * toColor(intersect),1.);
             addHit(color, indices[i]);
         }
     }
