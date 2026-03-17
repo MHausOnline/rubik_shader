@@ -5,8 +5,8 @@ const program = gl.createProgram();
 
 function setSize(){
     canv.style.height = window.innerWidth+"px";
-    canv.width = canv.clientWidth-1;
-    canv.height = canv.clientHeight-1;
+    canv.width = canv.clientWidth;
+    canv.height = canv.clientHeight;
 }
 setSize()
 
