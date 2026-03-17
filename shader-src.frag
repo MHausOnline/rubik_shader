@@ -110,7 +110,7 @@ void cubeIntersect(Cube cube, vec3 base, vec3 direct){
         vec3 intersect = offset + direct * indices[i];
         if(indices[i] > 0. && abs(intersect.z) <= cube.size.z*1.01 && abs(intersect.y) <= cube.size.y*1.01 && abs(intersect.x) <= cube.size.x*1.01){
             vec3 normal = normalize(oneHot(intersect));
-            vec4 color = (1.+(dot(normal, normalize(rLight-intersect)))) * toColor(intersect)/2.;
+            vec4 color = max(0.,(dot(normal, normalize(intersect-rLight)))) * toColor(intersect)/2.;
             addHit(color, indices[i]);
         }
     }
